@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Makes phones show the page at real size instead of a zoomed-out desktop view -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nearby Essentials</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <p class="header-label">You are in</p>
+    <!-- Filled with the real area name in Step 3 -->
+    <h1 id="area-name">Finding your area...</h1>
+    <input id="search" class="search" type="search" placeholder="Search anything nearby">
+  </header>
+
+  <!-- Screen 1: home tiles -->
+  <main id="home-screen">
+    <h2 class="section-title">What do you need?</h2>
+    <!-- Empty on purpose: app.js creates the tiles from a list -->
+    <div id="tile-grid" class="tile-grid"></div>
+  </main>
+
+  <!-- Screen 2: place list. "hidden" keeps it invisible until a tile is tapped -->
+  <section id="list-screen" hidden>
+    <div class="list-header">
+      <button id="back-button" class="back-button">← Back</button>
+      <h2 id="list-title" class="list-title"></h2>
+    </div>
+    <p class="list-note">Sorted by best nearby (rating and distance)</p>
+    <div id="place-list"></div>
+  </section>
+
+  <!-- Details bottom sheet: always on the page, slid off-screen until a place is tapped -->
+  <div id="sheet-backdrop" class="sheet-backdrop" hidden></div>
+  <div id="sheet" class="sheet">
+    <div class="sheet-top">
+      <div class="sheet-handle"></div>
+      <button id="sheet-close" class="sheet-close" aria-label="Close">✕</button>
+    </div>
+    <div id="sheet-content" class="sheet-content"></div>
+  </div>
+
+  <!-- Short status messages, e.g. "Address copied" -->
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

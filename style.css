@@ -1,0 +1,408 @@
+/* Colours live in one place so changing the theme means editing only these lines */
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1c1e21;
+  --muted: #6b7280;
+  --accent: #0f766e;
+}
+
+* {
+  box-sizing: border-box; /* width includes padding, which makes sizing predictable */
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.header {
+  background: var(--accent);
+  color: #fff;
+  padding: 20px 16px 16px;
+}
+
+.header-label {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.header h1 {
+  margin: 4px 0 12px;
+  font-size: 22px;
+}
+
+.search {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px; /* 16px stops iPhones from auto-zooming when the box is tapped */
+}
+
+main {
+  padding: 16px;
+}
+
+.section-title {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+/* 3 equal columns; the browser wraps tiles into rows automatically */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* Wraps each tile so a custom tile can carry its small remove button */
+.tile-wrap {
+  position: relative;
+}
+
+.tile-wrap .tile {
+  width: 100%;
+  height: 100%;
+}
+
+.tile {
+  background: var(--card);
+  border: none;
+  border-radius: 14px;
+  padding: 16px 6px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.tile:active {
+  transform: scale(0.96); /* small press feedback on touch */
+}
+
+.tile-icon {
+  font-size: 34px;
+}
+
+.tile-add {
+  background: transparent;
+  border: 2px dashed #cbd5e1;
+  box-shadow: none;
+  color: var(--muted);
+}
+
+.tile-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* ---------- Step 4: place list ---------- */
+
+#list-screen {
+  padding: 16px;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 15px;
+  color: var(--accent);
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.list-title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.list-note {
+  margin: 6px 0 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.place-card {
+  display: flex;
+  gap: 12px;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Stands in for the place photo until real data arrives in Step 7 */
+.place-thumb {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.place-card {
+  cursor: pointer;
+}
+
+.place-info {
+  flex: 1;      /* takes the space between the photo and the star */
+  min-width: 0; /* lets long names shorten instead of pushing the card wider */
+}
+
+.star-button {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #f59e0b;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.place-name {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.place-meta {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.rating {
+  color: #b45309;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.badge.open {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.closed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ---------- Step 5: details bottom sheet ---------- */
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Parked below the screen; the "open" class slides it up */
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: 18px 18px 0 0;
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+
+.sheet.open {
+  transform: translateY(0);
+}
+
+.sheet-top {
+  position: relative;
+  padding: 10px 16px 4px;
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  margin: 0 auto;
+  border-radius: 2px;
+  background: #d1d5db;
+}
+
+.sheet-close {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.sheet-content {
+  overflow-y: auto;
+  padding: 8px 16px 28px;
+}
+
+/* Swipeable strip: scroll sideways, each photo snaps into place */
+.photo-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0 -16px 12px;
+  padding: 0 16px;
+}
+
+.photo {
+  flex: 0 0 75%;
+  height: 150px;
+  border-radius: 12px;
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.photo-1 { background: #ccfbf1; }
+.photo-2 { background: #e0e7ff; }
+.photo-3 { background: #fef3c7; }
+.photo-4 { background: #fce7f3; }
+
+.sheet-title {
+  margin: 0 0 4px;
+  font-size: 19px;
+}
+
+.sheet-rows {
+  margin: 14px 0;
+  border-top: 1px solid var(--bg);
+}
+
+.sheet-row {
+  display: block;
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bg);
+  font-size: 14px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+a.sheet-row {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sheet-subtitle {
+  margin: 16px 0 8px;
+  font-size: 15px;
+}
+
+.review {
+  padding: 8px 0;
+}
+
+.review-author {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.review-text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ---------- Step 6: action buttons and toast ---------- */
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.action {
+  padding: 12px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 24px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #1f2937;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+}
+
+.see-all {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 600;
+}
